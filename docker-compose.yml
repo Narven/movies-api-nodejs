@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  database:
+    image: mysql:5.7.30
+    restart: always
+    container_name: mongo
+    environment:
+      MYSQL_DATABASE: questoflife
+      MYSQL_USER: questoflife
+      MYSQL_PASSWORD: questoflife
+      MYSQL_ROOT_PASSWORD: questoflife
+    volumes:
+      - ./data:/data/db
+    ports:
+      - '3306:3306'
+
+volumes:
+  my-db:
