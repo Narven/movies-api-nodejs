@@ -1,10 +1,11 @@
 import { AsyncContainerModule, interfaces } from 'inversify'
 import { Repository } from 'typeorm'
-import QuestController, { IQuestController } from './controllers/QuestController'
+import MovieController, { IQuestController } from './controllers/MovieController'
 import RootController, { IRootController } from './controllers/RootController'
 import { getDbConnection } from './database'
-import { IQuest } from './entity/Quest'
-import { questRepository } from './entity/repository/QuestRepository'
+import { IMovie } from './entity/Movie'
+import { movieRepository } from './entity/repository/MovieRepository'
+import ValidationIdResourceMiddleware from './middlewares/ValidationIdResourceMiddleware'
 import { TYPES } from './types'
 import Bind = interfaces.Bind
 
@@ -14,9 +15,11 @@ export const bindings = new AsyncContainerModule(async (bind: Bind) => {
 
   // Controllers
   bind<IRootController>(TYPES.RootController).to(RootController)
-  bind<IQuestController>(TYPES.QuestController).to(QuestController)
+  bind<IQuestController>(TYPES.QuestController).to(MovieController)
   // Repository
-  bind<Repository<IQuest>>(TYPES.QuestRepository).toDynamicValue(() => {
-    return questRepository()
+  bind<Repository<IMovie>>(TYPES.MovieRepository).toDynamicValue(() => {
+    return movieRepository()
   }).inRequestScope()
+  // Middlewares
+  bind<ValidationIdResourceMiddleware>(TYPES.ValidationIdResourceMiddleware).to(ValidationIdResourceMiddleware)
 })

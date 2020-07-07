@@ -1,8 +1,7 @@
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
 import config from 'config'
-import Quest from './entity/Quest'
-import User from './entity/User'
+import Movie from './entity/Movie'
 
 export async function getDbConnection() {
   return createConnection({
@@ -15,8 +14,7 @@ export async function getDbConnection() {
     synchronize: false,
     logging: false,
     entities: [
-      User,
-      Quest
+      Movie
     ]
   })
 }

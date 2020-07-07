@@ -36,8 +36,16 @@ yarn
 ```
 
 ---
-
 ### Migrations
+
+### Initial Import
+
+> this will import the file on `mysql-dump/movies.sql` into to the docker image already running.
+
+run:
+```bash
+yarn run import
+```
 
 > This API uses migrations to keep the DB update
 
