@@ -1,6 +1,7 @@
 export const TYPES = {
   // Middlewares
   ValidationIdResourceMiddleware: Symbol.for('ValidationIdResourceMiddleware'),
+  ValidationCreateMovieMiddleware: Symbol.for('ValidationCreateMovieMiddleware'),
   // Database
   Database: Symbol.for('Database'),
   // Controllers

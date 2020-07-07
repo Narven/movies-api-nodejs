@@ -5,6 +5,7 @@ import RootController, { IRootController } from './controllers/RootController'
 import { getDbConnection } from './database'
 import { IMovie } from './entity/Movie'
 import { movieRepository } from './entity/repository/MovieRepository'
+import ValidationCreateMovieMiddleware from './middlewares/ValidationCreateMovieMiddleware'
 import ValidationIdResourceMiddleware from './middlewares/ValidationIdResourceMiddleware'
 import { TYPES } from './types'
 import Bind = interfaces.Bind
@@ -22,4 +23,5 @@ export const bindings = new AsyncContainerModule(async (bind: Bind) => {
   }).inRequestScope()
   // Middlewares
   bind<ValidationIdResourceMiddleware>(TYPES.ValidationIdResourceMiddleware).to(ValidationIdResourceMiddleware)
+  bind<ValidationCreateMovieMiddleware>(TYPES.ValidationCreateMovieMiddleware).to(ValidationCreateMovieMiddleware)
 })

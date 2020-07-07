@@ -47,7 +47,7 @@ class MovieController implements IQuestController {
     }
   }
 
-  @httpPost('/')
+  @httpPost('/', TYPES.ValidationCreateMovieMiddleware)
   public async post(
     @response() res: Response,
     @requestBody() content: Partial<IMovie>) {
