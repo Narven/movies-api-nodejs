@@ -1,27 +1,68 @@
-# Quest of Life API
+# Movies API
 
-## Configurations
-All configurations are stored in `./config`
+> This is a small movies API built on NodeJS. Used for demostration porpuses.
 
-### Install
-`yarn`
+---
 
-### Run
+## Tools
+This small API uses NodeJS/Typescript, together with some a specific set of libraries to help the job get done.
 
-`yarn run start`
+* Express
+* Inversify (Dependency Injection)
+* Joi (Validation library)
+* Morgan (logging / debugging)
+* TypeORM/MySQL2 (Entities/DB ORM)
+* Jest (Tests)
+
+---
+
+## Docker/Containers
+
+This API uses for local development a `docker-compose.yml` file with MySQL
+
+run: `docker-compose up`
+
+## Configurations (config package)
+
+> All configurations are stored in `./config` just rename it to `.dist.json` to `.json` for you specific environment.
+
+### Install (YARN)
+
+> Yarn package manager is used in this api
+
+run to install dependencies:
+```
+yarn
+```
 
 ---
 
 ### Migrations
 
-#### Generate
+> This API uses migrations to keep the DB update
 
-`yarn run typeorm migration:generate -n SOMENAME`
+#### Create a new migration
+
+```bash
+yarn run typeorm migration:generate -n <SOMENAME>
+```
 
 #### Run (up)
 
-`yarn run migrations:up`
+```bash
+yarn run migrations:up
+```
 
 #### Run (down)
 
-`yarn run migrations:down`
+```bash
+yarn run migrations:down
+```
+
+---
+
+## Run
+
+> Bring api up...
+
+`yarn run start`

@@ -5,10 +5,10 @@ services:
     restart: always
     container_name: mongo
     environment:
-      MYSQL_DATABASE: questoflife
-      MYSQL_USER: questoflife
-      MYSQL_PASSWORD: questoflife
-      MYSQL_ROOT_PASSWORD: questoflife
+      MYSQL_DATABASE: movies
+      MYSQL_USER: movies
+      MYSQL_PASSWORD: movies
+      MYSQL_ROOT_PASSWORD: movies
     volumes:
       - ./data:/data/db
     ports:
