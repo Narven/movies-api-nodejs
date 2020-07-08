@@ -1,5 +1,6 @@
 {
   "name": "movies-api",
+  "description": "This is a demo NodeJS api build around a MySQL Movies database.",
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
@@ -11,7 +12,8 @@
   "scripts": {
     "build": "tsc",
     "start": "DEBUG=APP* ENV=development NODE_ENV=development concurrently \"tsc -w\" \"nodemon dist/index.js\"",
-    "test": "jest --watchAll --verbose",
+    "test": "ENV=test jest --verbose",
+    "test:watch": "ENV=test jest --watchAll --verbose",
     "typeorm": "typeorm",
     "migrations:up": "yarn run build && yarn run typeorm migration:run",
     "migrations:down": "yarn run build && yarn run typeorm migration:revert",

@@ -7,11 +7,8 @@ describe('RootController', () => {
     done()
   })
 
-  it('should return 200', async (done) => {
-
+  it('should return 200', async () => {
     // TODO make tests work with inversify (DI)
-
-    done()
   })
 
 })
