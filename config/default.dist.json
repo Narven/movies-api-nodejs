@@ -1,0 +1,17 @@
+{
+  "name": "Movies API",
+  "shortName": "API",
+  "version": "0.1",
+  "app": {
+    "shortName": "APP",
+    "port": 3000
+  },
+  "db": {
+    "username": "movies",
+    "password": "movies",
+    "name": "movies",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql"
+  }
+}
