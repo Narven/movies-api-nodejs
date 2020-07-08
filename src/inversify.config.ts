@@ -1,22 +1,27 @@
-import { AsyncContainerModule, interfaces } from 'inversify'
+import { AsyncContainerModule, interfaces as xxx } from 'inversify'
+import { interfaces, TYPE } from 'inversify-express-utils'
 import { Repository } from 'typeorm'
-import QuestController, { IQuestController } from './controllers/QuestController'
-import RootController, { IRootController } from './controllers/RootController'
+import MovieController from './controllers/MovieController'
+import RootController from './controllers/RootController'
 import { getDbConnection } from './database'
-import { IQuest } from './entity/Quest'
-import { questRepository } from './entity/repository/QuestRepository'
+import { IMovie } from './entity/Movie'
+import { movieRepository } from './entity/repository/MovieRepository'
+import ValidationCreateMovieMiddleware from './middlewares/ValidationCreateMovieMiddleware'
+import ValidationIdResourceMiddleware from './middlewares/ValidationIdResourceMiddleware'
 import { TYPES } from './types'
-import Bind = interfaces.Bind
+import Bind = xxx.Bind
 
 export const bindings = new AsyncContainerModule(async (bind: Bind) => {
-
   await getDbConnection()
 
   // Controllers
-  bind<IRootController>(TYPES.RootController).to(RootController)
-  bind<IQuestController>(TYPES.QuestController).to(QuestController)
+  bind<interfaces.Controller>(TYPE.Controller).to(RootController).inSingletonScope().whenTargetNamed(TYPES.RootController)
+  bind<interfaces.Controller>(TYPE.Controller).to(MovieController).inSingletonScope().whenTargetNamed(TYPES.MovieController)
   // Repository
-  bind<Repository<IQuest>>(TYPES.QuestRepository).toDynamicValue(() => {
-    return questRepository()
+  bind<Repository<IMovie>>(TYPES.MovieRepository).toDynamicValue(() => {
+    return movieRepository()
   }).inRequestScope()
+  // Middlewares
+  bind<ValidationIdResourceMiddleware>(TYPES.ValidationIdResourceMiddleware).to(ValidationIdResourceMiddleware)
+  bind<ValidationCreateMovieMiddleware>(TYPES.ValidationCreateMovieMiddleware).to(ValidationCreateMovieMiddleware)
 })

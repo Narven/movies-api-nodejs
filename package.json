@@ -3,16 +3,23 @@
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
+  "author": {
+    "name": "Pedro Luz",
+    "email": "pedromsluz@gmail.com",
+    "url": "https://pedromsluz.co.uk"
+  },
   "scripts": {
     "build": "tsc",
     "start": "DEBUG=APP* ENV=development NODE_ENV=development concurrently \"tsc -w\" \"nodemon dist/index.js\"",
     "test": "jest --watchAll --verbose",
     "typeorm": "typeorm",
     "migrations:up": "yarn run build && yarn run typeorm migration:run",
-    "migrations:down": "yarn run build && yarn run typeorm migration:revert"
+    "migrations:down": "yarn run build && yarn run typeorm migration:revert",
+    "import": "cat mysql-dump/movies.sql | docker exec -i movies-db /usr/bin/mysql -u movies --password=movies movies\n"
   },
   "devDependencies": {
     "@types/bcryptjs": "2.4.1",
+    "@types/chai": "^4.2.11",
     "@types/config": "^0.0.36",
     "@types/cors": "^2.8.6",
     "@types/debug": "^4.1.5",
@@ -22,11 +29,15 @@
     "@types/joi": "^14.3.4",
     "@types/morgan": "^1.9.1",
     "@types/node": "^14.0.14",
+    "@types/supertest": "^2.0.10",
+    "chai": "^4.2.0",
     "eslint": "^7.3.1",
     "eslint-plugin-import": "^2.22.0",
     "express": "^4.17.1",
     "jest": "^26.1.0",
     "nodemon": "^2.0.4",
+    "supertest": "^4.0.2",
+    "swagger-express-ts": "^1.0.1",
     "ts-jest": "^26.1.1",
     "ts-loader": "^7.0.5",
     "ts-node": "^8.10.2",
@@ -46,10 +57,11 @@
     "inversify": "^5.0.1",
     "inversify-express-utils": "^6.3.2",
     "joi": "^14.3.1",
-    "logrocket": "^1.0.9",
     "morgan": "^1.10.0",
     "mysql2": "1.4.2",
     "reflect-metadata": "^0.1.13",
+    "swagger-express-ts2": "^1.0.3",
+    "swagger-ui-dist": "^3.28.0",
     "typeorm": "^0.2.25",
     "typescript": "^3.9.6"
   }
