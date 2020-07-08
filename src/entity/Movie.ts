@@ -9,19 +9,19 @@ export enum MovieStatus {
 }
 
 export interface IMovie {
-  movieId: Number
+  movieId: number
   title: string
-  budget: Number,
+  budget: number,
   homepage: string,
   overview: string,
-  popularity: Number,
+  popularity: number,
   releaseDate: Date,
-  revenue: Number,
-  runtime: Number,
+  revenue: number,
+  runtime: number,
   movieStatus: MovieStatus,
   tagline: string,
-  voteAverage: Number,
-  voteCount: Number
+  voteAverage: number,
+  voteCount: number
 }
 
 const Movie = new EntitySchema<IMovie>({
