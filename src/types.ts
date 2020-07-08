@@ -6,8 +6,7 @@ export const TYPES = {
   Database: Symbol.for('Database'),
   // Controllers
   RootController: Symbol.for('RootController'),
-  QuestController: Symbol.for('QuestController'),
-  HomeController: Symbol.for('HomeController'),
+  MovieController: Symbol.for('MovieController'),
   // Repositories
   MovieRepository: Symbol.for('MovieRepository')
 }

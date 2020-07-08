@@ -74,3 +74,7 @@ yarn run migrations:down
 > Bring api up...
 
 `yarn run start`
+
+## API Documentation
+
+API Documentation is available at: [http://localhost:3000/api-docs/swagger/](http://localhost:3000/api-docs/swagger/)

@@ -9,15 +9,15 @@ export enum MovieStatus {
 }
 
 export interface IMovie {
-  movieId: number
+  movieId: Number
   title: string
-  budget: number,
+  budget: Number,
   homepage: string,
   overview: string,
-  popularity: number,
+  popularity: Number,
   releaseDate: Date,
-  revenue: number,
-  runtime: number,
+  revenue: Number,
+  runtime: Number,
   movieStatus: MovieStatus,
   tagline: string,
   voteAverage: Number,

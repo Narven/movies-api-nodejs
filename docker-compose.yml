@@ -4,14 +4,11 @@ services:
     image: mysql:5.7.30
     restart: always
     container_name: movies-db
-#    command: mysqld --user=root
     environment:
       MYSQL_DATABASE: movies
       MYSQL_USER: movies
       MYSQL_PASSWORD: movies
       MYSQL_ROOT_PASSWORD: movies
-#    volumes:
-#      - ./mysql-dump:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"
 
