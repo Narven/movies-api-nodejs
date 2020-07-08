@@ -9,7 +9,13 @@ import {
   requestParam,
   response
 } from 'inversify-express-utils'
-import { ApiOperationGet, ApiPath, SwaggerDefinitionConstant } from 'swagger-express-ts'
+import {
+  ApiOperationGet,
+  ApiOperationPost,
+  ApiOperationPut,
+  ApiPath,
+  SwaggerDefinitionConstant
+} from 'swagger-express-ts'
 import { Repository } from 'typeorm'
 import { apiResponse } from '../constant'
 import { IMovie } from '../entity/Movie'
@@ -58,6 +64,17 @@ class MovieController implements interfaces.Controller {
     }
   }
 
+  @ApiOperationGet({
+    description: 'Get one movie',
+    summary: 'Get one movie by ID',
+    responses: {
+      200: {
+        description: 'Success',
+        type: SwaggerDefinitionConstant.Response.Type.OBJECT,
+        model: 'Movie'
+      }
+    }
+  })
   @httpGet('/:id', TYPES.ValidationIdResourceMiddleware)
   public async getOne(
     @response() res: Response,
@@ -73,6 +90,21 @@ class MovieController implements interfaces.Controller {
     }
   }
 
+  @ApiOperationPost({
+    description: 'Create a new movie',
+    summary: 'Create a new movie',
+    parameters: {
+      body: {
+        description: 'New Movie',
+        required: true,
+        model: 'Movie'
+      }
+    },
+    responses: {
+      200: { description: 'Success' },
+      500: { description: 'Parameters fail' }
+    }
+  })
   @httpPost('/', TYPES.ValidationCreateMovieMiddleware)
   public async addNew(
     @response() res: Response,
@@ -85,6 +117,21 @@ class MovieController implements interfaces.Controller {
     }
   }
 
+  @ApiOperationPut({
+    description: 'Update an existing movie',
+    summary: 'Update an existing movie by ID',
+    parameters: {
+      body: {
+        description: 'Movie object',
+        required: true,
+        model: 'Movie'
+      }
+    },
+    responses: {
+      200: { description: 'Success' },
+      500: { description: 'Parameters fail' }
+    }
+  })
   @httpPut('/:id', TYPES.ValidationIdResourceMiddleware, TYPES.ValidationCreateMovieMiddleware)
   public async updateOne(
     @response() res: Response,

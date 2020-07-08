@@ -1,6 +1,10 @@
 # Movies API
 
-> This is a small movies API built on NodeJS. Used for demostration porpuses.
+> This is a small movies API built on NodeJS. Used for demostration porpuses. This uses a movies database downloaded from [https://www.databasestar.com/sample-database-movies/](https://www.databasestar.com/sample-database-movies/)
+
+API [http://localhost:3000/api/v1](http://localhost:3000/api/v1)
+
+API DOCS: [http://localhost:3000/api-docs/swagger/](http://localhost:3000/api-docs/swagger/)
 
 ---
 
@@ -22,6 +26,8 @@ This API uses for local development a `docker-compose.yml` file with MySQL
 
 run: `docker-compose up`
 
+---
+
 ## Configurations (config package)
 
 > All configurations are stored in `./config` just rename it to `.dist.json` to `.json` for you specific environment.
@@ -36,9 +42,8 @@ yarn
 ```
 
 ---
-### Migrations
 
-### Initial Import
+### Data
 
 > this will import the file on `mysql-dump/movies.sql` into to the docker image already running.
 
@@ -46,6 +51,10 @@ run:
 ```bash
 yarn run import
 ```
+
+---
+
+### Migrations
 
 > This API uses migrations to keep the DB update
 

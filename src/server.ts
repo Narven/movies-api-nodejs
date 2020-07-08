@@ -25,13 +25,30 @@ const createServer = (container: any, rootPath: string): InversifyExpressServer 
         definition: {
           info: {
             title: 'Movies API',
-            version: '1.0'
+            version: '0.1'
           },
           externalDocs: {
-            url: 'http://localhost:3000'
+            url: 'http://localhost:3000/api-docs/swagger/'
           },
           models: {
-            Movie: { description: 'Movie', properties: {} }
+            Movie: {
+              description: 'Movie',
+              properties: {
+                movieId: {},
+                title: {},
+                budget: {},
+                homepage: {},
+                overview: {},
+                popularity: {},
+                releaseDate: {},
+                revenue: {},
+                runtime: {},
+                movieStatus: {},
+                tagline: {},
+                voteAverage: {},
+                voteCount: {}
+              }
+            }
           }
           // Models can be defined here
         }
