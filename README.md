@@ -1,6 +1,7 @@
 # Movies API
 
 ![](https://github.com/Narven/movies-api/workflows/.github/workflows/tests.yml/badge.svg)
+![](https://github.com/Narven}/movies-api/workflows/Tests/badge.svg)
 
 > This is a small movies API built on NodeJS. Used for demostration porpuses. This uses a movies database downloaded from [https://www.databasestar.com/sample-database-movies/](https://www.databasestar.com/sample-database-movies/)
 
