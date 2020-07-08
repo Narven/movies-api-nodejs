@@ -1,4 +1,6 @@
-![Test](https://github.com/Narven/movies-api/workflows/Tests/badge.svg?branch=master&event=push)
+![Test Master](https://github.com/Narven/movies-api/workflows/Tests/badge.svg?branch=master&event=push)
+![Test Develop](https://github.com/Narven/movies-api/workflows/Tests/badge.svg?branch=develop&event=push)
+[![CodeFactor](https://www.codefactor.io/repository/github/narven/movies-api/badge)](https://www.codefactor.io/repository/github/narven/movies-api)
 
 # Movies API
 
