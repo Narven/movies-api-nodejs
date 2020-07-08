@@ -25,3 +25,8 @@ export const vCreateMovieSchema = Joi.object({
   voteCount: vNumber.optional().label('Vote Count')
 })
 
+export const vCreateGenreSchema = Joi.object({
+  genreId: Joi.number().required().label('Genre ID'),
+  genreName: Joi.string().required().label('Genre name')
+})
+

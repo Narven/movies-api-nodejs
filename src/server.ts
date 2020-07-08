@@ -48,6 +48,13 @@ const createServer = (container: any, rootPath: string): InversifyExpressServer 
                 voteAverage: {},
                 voteCount: {}
               }
+            },
+            Genre: {
+              description: 'Genre',
+              properties: {
+                genreId: {},
+                genreName: {}
+              }
             }
           }
           // Models can be defined here
