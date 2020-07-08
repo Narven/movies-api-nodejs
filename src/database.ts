@@ -1,6 +1,7 @@
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
 import config from 'config'
+import Genre from './entity/Genre'
 import Movie from './entity/Movie'
 
 export async function getDbConnection() {
@@ -14,7 +15,8 @@ export async function getDbConnection() {
     synchronize: false,
     logging: false,
     entities: [
-      Movie
+      Movie,
+      Genre
     ]
   })
 }

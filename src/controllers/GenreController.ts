@@ -3,7 +3,8 @@ import { inject } from 'inversify'
 import {
   controller,
   httpGet,
-  httpPost, httpPut, interfaces,
+  httpPost, httpPut,
+  interfaces,
   queryParam,
   requestBody,
   requestParam,
@@ -18,35 +19,35 @@ import {
 } from 'swagger-express-ts'
 import { Repository } from 'typeorm'
 import { apiResponse } from '../constant'
-import { IMovie } from '../entity/Movie'
+import { IGenre } from '../entity/Genre'
 import { HttpStatus } from '../HttpStatus'
 import { TYPES } from '../types'
 import Controller = interfaces.Controller
 
-export interface IMovieController extends Controller {
+export interface IGenreRepository extends Controller {
   getAll: (res: Response, limit: number, offset: number) => void
   getOne: (res: Response, id: number) => void
-  addNew: (res: Response, content: Partial<IMovie>) => void
-  updateOne: (res: Response, id: number, movie: Partial<IMovie>) => void
+  addNew: (res: Response, content: Partial<IGenre>) => void
+  updateOne: (res: Response, id: number, genre: Partial<IGenre>) => void
 }
 
 @ApiPath({
-  path: '/movies',
-  name: 'Movies'
+  path: '/genres',
+  name: 'Genres'
 })
-@controller('/movies')
-class MovieController implements interfaces.Controller {
-  constructor(@inject(TYPES.MovieRepository) private repo: Repository<IMovie>) {
+@controller('/genres')
+class GenreController implements interfaces.Controller {
+  constructor(@inject(TYPES.GenreRepository) private repo: Repository<IGenre>) {
   }
 
   @ApiOperationGet({
-    description: 'Get all movies',
-    summary: 'Get all movies available',
+    description: 'Get all genres',
+    summary: 'Get all genres available',
     responses: {
       [HttpStatus.ok]: {
         description: 'Success',
         type: SwaggerDefinitionConstant.Response.Type.ARRAY,
-        model: 'Movie'
+        model: 'Genre'
       }
     }
   })
@@ -66,13 +67,13 @@ class MovieController implements interfaces.Controller {
   }
 
   @ApiOperationGet({
-    description: 'Get one movie',
-    summary: 'Get one movie by ID',
+    description: 'Get one genre',
+    summary: 'Get one genre by ID',
     responses: {
       [HttpStatus.ok]: {
         description: 'Success',
         type: SwaggerDefinitionConstant.Response.Type.OBJECT,
-        model: 'Movie'
+        model: 'Genre'
       }
     }
   })
@@ -83,22 +84,23 @@ class MovieController implements interfaces.Controller {
     try {
       const data = await this.repo.findByIds([id])
       if (data.length < 1) {
-        throw new Error(`Movie with id: ${id} found`)
+        throw new Error(`Genre with id: ${id} found`)
       }
       return res.json(apiResponse(data))
     } catch (e) {
-      return res.sendStatus(HttpStatus.notFound)
+      return res
+        .sendStatus(HttpStatus.notFound)
     }
   }
 
   @ApiOperationPost({
-    description: 'Create a new movie',
-    summary: 'Create a new movie',
+    description: 'Create a new genre',
+    summary: 'Create a new genre',
     parameters: {
       body: {
-        description: 'New Movie',
+        description: 'New Genre',
         required: true,
-        model: 'Movie'
+        model: 'Genre'
       }
     },
     responses: {
@@ -106,10 +108,10 @@ class MovieController implements interfaces.Controller {
       [HttpStatus.internalServerError]: { description: 'Parameters fail' }
     }
   })
-  @httpPost('/', TYPES.ValidationCreateMovieMiddleware)
+  @httpPost('/', TYPES.ValidationCreateGenreMiddleware)
   public async addNew(
     @response() res: Response,
-    @requestBody() content: Partial<IMovie>) {
+    @requestBody() content: Partial<IGenre>) {
     try {
       return await this.repo.save(content)
     } catch (e) {
@@ -120,13 +122,13 @@ class MovieController implements interfaces.Controller {
   }
 
   @ApiOperationPut({
-    description: 'Update an existing movie',
-    summary: 'Update an existing movie by ID',
+    description: 'Update an existing genre',
+    summary: 'Update an existing genre by ID',
     parameters: {
       body: {
-        description: 'Movie object',
+        description: 'Genre object',
         required: true,
-        model: 'Movie'
+        model: 'Genre'
       }
     },
     responses: {
@@ -134,22 +136,22 @@ class MovieController implements interfaces.Controller {
       [HttpStatus.internalServerError]: { description: 'Parameters fail' }
     }
   })
-  @httpPut('/:id', TYPES.ValidationIdResourceMiddleware, TYPES.ValidationCreateMovieMiddleware)
+  @httpPut('/:id', TYPES.ValidationIdResourceMiddleware, TYPES.ValidationCreateGenreMiddleware)
   public async updateOne(
     @response() res: Response,
     @requestParam('id') id: number,
-    @requestBody() movie: Partial<IMovie>) {
+    @requestBody() genre: Partial<IGenre>) {
     try {
-      const data = await this.repo.update({ movieId: id }, movie)
-        .then(() => this.repo.findOne({ movieId: id }))
+      const data = await this.repo.update({ genreId: id }, genre)
+        .then(() => this.repo.findOne({ genreId: id }))
       return res.json(apiResponse(data))
     } catch (e) {
       return res
-        .status(HttpStatus.internalServerError)
+        .status(500)
         .json(apiResponse({ error: e.message }))
     }
   }
 
 }
 
-export default MovieController
+export default GenreController

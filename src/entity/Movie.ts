@@ -28,7 +28,7 @@ const Movie = new EntitySchema<IMovie>({
   name: movieEntityName,
   columns: {
     movieId: {
-      type: Number,
+      type: 'int',
       primary: true,
       generated: true,
       name: 'movie_id'
@@ -40,7 +40,7 @@ const Movie = new EntitySchema<IMovie>({
       nullable: true
     },
     budget: {
-      type: Number,
+      type: 'int',
       nullable: true
     },
     homepage: {
@@ -61,11 +61,11 @@ const Movie = new EntitySchema<IMovie>({
       name: 'release_date'
     },
     revenue: {
-      type: Number,
+      type: 'int',
       nullable: true
     },
     runtime: {
-      type: Number,
+      type: 'int',
       nullable: true
     },
     movieStatus: {
