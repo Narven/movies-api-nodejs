@@ -11,13 +11,14 @@ jobs:
 
     services:
       db:
-        image: mysql:5.7.12
+        image: mysql:5.7.30
         ports:
           - 3316:3306
         env:
-          MYSQL_USER: test
-          MYSQL_PASSWORD: test
-          MYSQL_ROOT_PASSWORD: test
+          MYSQL_USER: questoflife
+          MYSQL_PASSWORD: questoflife
+          MYSQL_ROOT_PASSWORD: questoflife
+          MYSQL_DATABASE: questoflife
 
     steps:
       - uses: actions/checkout@v2

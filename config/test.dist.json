@@ -7,10 +7,10 @@
     "port": 3000
   },
   "db": {
-    "username": "test",
-    "password": "test",
-    "name": "test",
-    "host": "127.0.0.1",
+    "username": "questoflife",
+    "password": "questoflife",
+    "name": "questoflife",
+    "host": "0.0.0.0",
     "port": 3306,
     "dialect": "mysql"
   }
