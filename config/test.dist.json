@@ -7,9 +7,9 @@
     "port": 3000
   },
   "db": {
-    "username": "something",
-    "password": "something",
-    "name": "something",
+    "username": "test",
+    "password": "test",
+    "name": "test",
     "host": "127.0.0.1",
     "port": 3306,
     "dialect": "mysql"

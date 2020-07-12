@@ -5,9 +5,19 @@ on:
     branches: '*'
 
 jobs:
-  run-tests:
-    name: Run tests
+  tests:
+    name: Tests
     runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: mysql:5.7.12
+        ports:
+          - 3316:3306
+        env:
+          MYSQL_USER: test
+          MYSQL_PASSWORD: test
+          MYSQL_ROOT_PASSWORD: test
 
     steps:
       - uses: actions/checkout@v2
