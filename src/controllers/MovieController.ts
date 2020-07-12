@@ -1,13 +1,12 @@
-import { Response } from 'express'
 import { inject } from 'inversify'
 import {
+  BaseHttpController,
   controller,
   httpGet,
   httpPost, httpPut, interfaces,
   queryParam,
   requestBody,
-  requestParam,
-  response
+  requestParam
 } from 'inversify-express-utils'
 import {
   ApiOperationGet,
@@ -24,10 +23,10 @@ import { TYPES } from '../types'
 import Controller = interfaces.Controller
 
 export interface IMovieController extends Controller {
-  getAll: (res: Response, limit: number, offset: number) => void
-  getOne: (res: Response, id: number) => void
-  addNew: (res: Response, content: Partial<IMovie>) => void
-  updateOne: (res: Response, id: number, movie: Partial<IMovie>) => void
+  getAll: (limit: number, offset: number) => void
+  getOne: (id: number) => void
+  addNew: (content: Partial<IMovie>) => void
+  updateOne: (id: number, movie: Partial<IMovie>) => void
 }
 
 @ApiPath({
@@ -35,8 +34,9 @@ export interface IMovieController extends Controller {
   name: 'Movies'
 })
 @controller('/movies')
-class MovieController implements interfaces.Controller {
+class MovieController extends BaseHttpController implements interfaces.Controller, IMovieController {
   constructor(@inject(TYPES.MovieRepository) private repo: Repository<IMovie>) {
+    super()
   }
 
   @ApiOperationGet({
@@ -52,16 +52,13 @@ class MovieController implements interfaces.Controller {
   })
   @httpGet('/')
   public async getAll(
-    @response() res: Response,
     @queryParam('limit') limit: number = 30,
     @queryParam('offset') offset: number = 0) {
     try {
       const data = await this.repo.find({ skip: offset, take: limit })
-      return res.json(apiResponse(data))
+      return this.json(apiResponse(data))
     } catch (e) {
-      return res
-        .status(HttpStatus.ok)
-        .json(apiResponse([]))
+      return this.json(apiResponse([]))
     }
   }
 
@@ -77,17 +74,15 @@ class MovieController implements interfaces.Controller {
     }
   })
   @httpGet('/:id', TYPES.ValidationIdResourceMiddleware)
-  public async getOne(
-    @response() res: Response,
-    @requestParam('id') id: number) {
+  public async getOne(@requestParam('id') id: number) {
     try {
       const data = await this.repo.findByIds([id])
       if (data.length < 1) {
         throw new Error(`Movie with id: ${id} found`)
       }
-      return res.json(apiResponse(data))
+      return this.json(apiResponse(data))
     } catch (e) {
-      return res.sendStatus(HttpStatus.notFound)
+      return this.notFound()
     }
   }
 
@@ -107,15 +102,11 @@ class MovieController implements interfaces.Controller {
     }
   })
   @httpPost('/', TYPES.ValidationCreateMovieMiddleware)
-  public async addNew(
-    @response() res: Response,
-    @requestBody() content: Partial<IMovie>) {
+  public async addNew(@requestBody() content: Partial<IMovie>) {
     try {
       return await this.repo.save(content)
     } catch (e) {
-      return res
-        .status(HttpStatus.internalServerError)
-        .json(apiResponse({ error: e.message }))
+      return this.internalServerError(e.message)
     }
   }
 
@@ -136,17 +127,14 @@ class MovieController implements interfaces.Controller {
   })
   @httpPut('/:id', TYPES.ValidationIdResourceMiddleware, TYPES.ValidationCreateMovieMiddleware)
   public async updateOne(
-    @response() res: Response,
     @requestParam('id') id: number,
     @requestBody() movie: Partial<IMovie>) {
     try {
       const data = await this.repo.update({ movieId: id }, movie)
         .then(() => this.repo.findOne({ movieId: id }))
-      return res.json(apiResponse(data))
+      return this.json(apiResponse(data))
     } catch (e) {
-      return res
-        .status(HttpStatus.internalServerError)
-        .json(apiResponse({ error: e.message }))
+      return this.internalServerError(e.message)
     }
   }
 

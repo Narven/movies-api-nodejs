@@ -1,13 +1,12 @@
-import { Request, Response } from 'express'
 import config from 'config'
-import { controller, httpGet, interfaces } from 'inversify-express-utils'
+import { BaseHttpController, controller, httpGet, interfaces } from 'inversify-express-utils'
 import { ApiOperationGet, ApiPath, SwaggerDefinitionConstant } from 'swagger-express-ts'
 import { apiResponse } from '../constant'
 import { HttpStatus } from '../HttpStatus'
 import Controller = interfaces.Controller
 
 export interface IRootController extends Controller {
-  getRoot(_req: any, res: Response): void
+  getRoot(): void
 }
 
 @ApiPath({
@@ -16,7 +15,7 @@ export interface IRootController extends Controller {
   description: 'The root of all evils'
 })
 @controller('/')
-class RootController implements interfaces.Controller {
+class RootController extends BaseHttpController implements interfaces.Controller, IRootController {
 
   @ApiOperationGet({
     description: 'Root',
@@ -29,8 +28,8 @@ class RootController implements interfaces.Controller {
     }
   })
   @httpGet('/')
-  public getRoot(_req: Request, res: Response): void {
-    res.json(apiResponse({ version: config.get('version') }))
+  public getRoot(): any {
+    return this.json(apiResponse({ version: config.get('version') }))
   }
 
   // @httpGet('*')

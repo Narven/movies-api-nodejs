@@ -1,6 +1,6 @@
-import { Response } from 'express'
 import { inject } from 'inversify'
 import {
+  BaseHttpController,
   controller,
   httpGet,
   httpPost, httpPut,
@@ -8,7 +8,6 @@ import {
   queryParam,
   requestBody,
   requestParam,
-  response
 } from 'inversify-express-utils'
 import {
   ApiOperationGet,
@@ -25,10 +24,10 @@ import { TYPES } from '../types'
 import Controller = interfaces.Controller
 
 export interface IGenreRepository extends Controller {
-  getAll: (res: Response, limit: number, offset: number) => void
-  getOne: (res: Response, id: number) => void
-  addNew: (res: Response, content: Partial<IGenre>) => void
-  updateOne: (res: Response, id: number, genre: Partial<IGenre>) => void
+  getAll: (limit: number, offset: number) => void
+  getOne: (id: number) => void
+  addNew: (content: Partial<IGenre>) => void
+  updateOne: (id: number, genre: Partial<IGenre>) => void
 }
 
 @ApiPath({
@@ -36,8 +35,9 @@ export interface IGenreRepository extends Controller {
   name: 'Genres'
 })
 @controller('/genres')
-class GenreController implements interfaces.Controller {
+class GenreController extends BaseHttpController implements interfaces.Controller, IGenreRepository {
   constructor(@inject(TYPES.GenreRepository) private repo: Repository<IGenre>) {
+    super()
   }
 
   @ApiOperationGet({
@@ -53,16 +53,13 @@ class GenreController implements interfaces.Controller {
   })
   @httpGet('/')
   public async getAll(
-    @response() res: Response,
     @queryParam('limit') limit: number = 30,
     @queryParam('offset') offset: number = 0) {
     try {
       const data = await this.repo.find({ skip: offset, take: limit })
-      return res.json(apiResponse(data))
+      return this.json(apiResponse(data))
     } catch (e) {
-      return res
-        .status(HttpStatus.ok)
-        .json(apiResponse([]))
+      return this.json(apiResponse([]))
     }
   }
 
@@ -79,17 +76,15 @@ class GenreController implements interfaces.Controller {
   })
   @httpGet('/:id', TYPES.ValidationIdResourceMiddleware)
   public async getOne(
-    @response() res: Response,
     @requestParam('id') id: number) {
     try {
       const data = await this.repo.findByIds([id])
       if (data.length < 1) {
         throw new Error(`Genre with id: ${id} found`)
       }
-      return res.json(apiResponse(data))
+      return this.json(apiResponse(data))
     } catch (e) {
-      return res
-        .sendStatus(HttpStatus.notFound)
+      return this.notFound()
     }
   }
 
@@ -110,14 +105,11 @@ class GenreController implements interfaces.Controller {
   })
   @httpPost('/', TYPES.ValidationCreateGenreMiddleware)
   public async addNew(
-    @response() res: Response,
     @requestBody() content: Partial<IGenre>) {
     try {
       return await this.repo.save(content)
     } catch (e) {
-      return res
-        .status(HttpStatus.internalServerError)
-        .json(apiResponse({ error: e.message }))
+      return this.internalServerError(e.message)
     }
   }
 
@@ -138,17 +130,14 @@ class GenreController implements interfaces.Controller {
   })
   @httpPut('/:id', TYPES.ValidationIdResourceMiddleware, TYPES.ValidationCreateGenreMiddleware)
   public async updateOne(
-    @response() res: Response,
     @requestParam('id') id: number,
     @requestBody() genre: Partial<IGenre>) {
     try {
       const data = await this.repo.update({ genreId: id }, genre)
         .then(() => this.repo.findOne({ genreId: id }))
-      return res.json(apiResponse(data))
+      return this.json(apiResponse(data))
     } catch (e) {
-      return res
-        .status(500)
-        .json(apiResponse({ error: e.message }))
+      return this.internalServerError(e.message)
     }
   }
 
