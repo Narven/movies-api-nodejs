@@ -13,7 +13,6 @@ jobs:
         ports:
           - 3306
         env:
-          #          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_USER: "questoflife"
           MYSQL_PASSWORD: "questoflife"
           MYSQL_ROOT_PASSWORD: "questoflife"
@@ -25,11 +24,6 @@ jobs:
           --health-retries=3
 
     steps:
-      - name: Verify MySQL connection from host
-        run: |
-          sudo apt-get install -y mysql-client
-          mysql --host 127.0.0.1 --port 32574 -uroot -ppassword -e "SHOW DATABASES"
-
       - uses: actions/checkout@v2
 
       - name: Build test config file
