@@ -12,7 +12,7 @@ jobs:
         image: mysql:5.7.30
         ports:
           - 3306
-        environment:
+        env:
 #          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_USER: questoflife
           MYSQL_PASSWORD: questoflife
