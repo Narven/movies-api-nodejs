@@ -11,7 +11,7 @@ jobs:
       db:
         image: mysql:5.7.30
         ports:
-          - 3306
+          - 3306:3306
         env:
           MYSQL_USER: "questoflife"
           MYSQL_PASSWORD: "questoflife"
