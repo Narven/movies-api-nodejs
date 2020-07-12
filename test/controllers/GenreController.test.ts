@@ -8,6 +8,11 @@ import { IGenre } from '../../src/entity/Genre'
 import { HttpStatus } from '../../src/HttpStatus'
 import { bindings } from '../../src/inversify.config'
 import { TYPES } from '../../src/types'
+import * as config from 'config'
+
+console.debug(config.get('db.host'))
+console.debug(config.get('db.port'))
+console.debug(config.get('db.name'))
 
 describe('GenreController', () => {
   let controller: GenreController
