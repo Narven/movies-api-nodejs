@@ -1,8 +1,6 @@
 name: Tests
 
-on:
-  push:
-    branches: '*'
+on: [push]
 
 jobs:
   tests:
@@ -13,12 +11,13 @@ jobs:
       db:
         image: mysql:5.7.30
         ports:
-          - 3306:3306
+          - 3306
         env:
           MYSQL_USER: questoflife
           MYSQL_PASSWORD: questoflife
           MYSQL_ROOT_PASSWORD: questoflife
           MYSQL_DATABASE: questoflife
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
 
     steps:
       - uses: actions/checkout@v2
