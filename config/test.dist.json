@@ -7,8 +7,8 @@
     "port": 3000
   },
   "db": {
-    "username": "root",
-    "password": "root",
+    "username": "questoflife",
+    "password": "questoflife",
     "name": "questoflife",
     "host": "0.0.0.0",
     "port": 3306,

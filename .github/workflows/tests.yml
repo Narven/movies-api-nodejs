@@ -7,23 +7,28 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
 
-#    services:
-#      db:
-#        image: mysql:5.7.30
-#        ports:
-#          - 3306:3306
-#        env:
-#          MYSQL_USER: "questoflife"
-#          MYSQL_PASSWORD: "questoflife"
-#          MYSQL_ROOT_PASSWORD: "questoflife"
-#          MYSQL_DATABASE: "questoflife"
-#        options: >-
-#          --health-cmd="mysqladmin ping"
-#          --health-interval=10s
-#          --health-timeout=5s
-#          --health-retries=3
+    services:
+      db:
+        image: mysql:5.7.30
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_USER: "questoflife"
+          MYSQL_PASSWORD: "questoflife"
+          MYSQL_ROOT_PASSWORD: "questoflife"
+          MYSQL_DATABASE: "questoflife"
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
+      - name: Verify MySQL connection from host
+        run: |
+          sudo apt-get install -y mysql-client
+          mysql --host 0.0.0.0 --port 3306 -uquestoflife -pquestoflife -e "SHOW DATABASES"
+
       - uses: actions/checkout@v2
 
       - name: Build test config file
