@@ -17,7 +17,13 @@ export interface IValidationResult {
   statusCode: number
 }
 
-export const apiResponse = (data?: {} | [{}], validation?: IValidationResult, meta?: IPaginationResult) => {
+export interface IApiResponse {
+  data?: {} | [{}]
+  validation?: IValidationResult
+  meta?: IPaginationResult
+}
+
+export const apiResponse = (data?: {} | [{}], validation?: IValidationResult, meta?: IPaginationResult): IApiResponse => {
   return {
     data,
     meta,
