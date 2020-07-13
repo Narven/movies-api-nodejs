@@ -40,9 +40,9 @@ jobs:
           cmd: install
 
       - name: Import DB
-          uses: borales/actions-yarn@v2.0.0
-          with:
-            cmd: import
+        uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: import
 
       - name: Build project
         uses: borales/actions-yarn@v2.0.0
