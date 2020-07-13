@@ -10,9 +10,7 @@ import { bindings } from '../../src/inversify.config'
 import { TYPES } from '../../src/types'
 import config from 'config'
 
-console.debug(config.get('db.host'))
-console.debug(config.get('db.port'))
-console.debug(config.get('db.name'))
+console.debug(config.get('name'))
 
 describe('GenreController', () => {
   let controller: GenreController
