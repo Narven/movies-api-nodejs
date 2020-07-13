@@ -7,9 +7,9 @@
     "port": 3000
   },
   "db": {
-    "username": "questoflife",
-    "password": "questoflife",
-    "name": "questoflife",
+    "username": "movies",
+    "password": "movies",
+    "name": "movies",
     "host": "0.0.0.0",
     "port": 3306,
     "dialect": "mysql"

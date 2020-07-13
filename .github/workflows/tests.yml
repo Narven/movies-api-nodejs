@@ -42,7 +42,7 @@ jobs:
       - name: Import DB
         uses: borales/actions-yarn@v2.0.0
         with:
-          cmd: import
+          cmd: db:load
 
       - name: Build project
         uses: borales/actions-yarn@v2.0.0

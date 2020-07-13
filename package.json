@@ -17,7 +17,7 @@
     "typeorm": "typeorm",
     "migrations:up": "yarn run build && yarn run typeorm migration:run",
     "migrations:down": "yarn run build && yarn run typeorm migration:revert",
-    "import": "cat mysql-dump/movies.sql | docker exec -i movies-db /usr/bin/mysql -u movies --password=movies movies\n"
+    "db:load": "cat mysql-dump/movies.sql | docker exec -i db /usr/bin/mysql -u movies --password=movies movies\n"
   },
   "devDependencies": {
     "@types/bcryptjs": "2.4.1",
